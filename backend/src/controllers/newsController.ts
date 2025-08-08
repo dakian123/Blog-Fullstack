@@ -2,11 +2,11 @@ import express from "express";
 import { News } from '../types/type';
 import { getNews, getNewsByTitle, createNews, deleteNewsById, updateNewsById } from '../models/news';
 
+const req = express.request;
+const res = express.response;
+
 // Retrieve all news
-export const retrieveAllNews = async (
-    req: express.Request,
-    res: express.Response
-) => {
+export const retrieveAllNews = async () => {
     try {
         const allNews: News[] = await getNews();
         // return news json
@@ -22,10 +22,7 @@ export const retrieveAllNews = async (
 } 
 
 // Delete news
-export const deleteNews = async (
-    req: express.Request,
-    res: express.Response
-) => {
+export const deleteNews = async () => {
     try {
         // Retrieve id from request then call delete news function
         const { id } = req.params;
@@ -44,10 +41,7 @@ export const deleteNews = async (
 }
 
 // Search news by title
-export const searchNews = async (
-    req: express.Request,
-    res: express.Response
-) => {
+export const searchNews = async () => {
     try {
         // get title
         const { title } = req.body;
@@ -80,10 +74,7 @@ export const searchNews = async (
 }
 
 // Update news
-export const updateNews = async (
-    req: express.Request,
-    res: express.Response
-  ) => {
+export const updateNews = async (  ) => {
     try {
         // Get value and id
         const { value } = req.body;
@@ -117,10 +108,7 @@ export const updateNews = async (
   };
 
 // Create news
-  export const makeNews = async (
-    req: express.Request,
-    res: express.Response
-  ) => {
+  export const makeNews = async (  ) => {
     try {
         // Get value
         const { value } = req.body;
