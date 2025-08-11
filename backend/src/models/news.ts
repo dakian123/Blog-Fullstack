@@ -37,8 +37,8 @@ export const getNews = () => NewsModel.find().lean();
 // Get news by title
 export const getNewsByTitle = ( title: string ) => NewsModel.findOne({ title });
 // Create news
-export const createNews = ( value: News ) => new NewsModel(value).save().then((news) => news.toObject());
+export const createNews = ( title: string, content: string, tags: string[] ) => new NewsModel(title, content, tags).save();
 // Delete news by id
 export const deleteNewsById = ( id: string ) => NewsModel.findByIdAndDelete({ _id: id});
 // Update news by id
-export const updateNewsById = ( id: string, value: News ) => NewsModel.findByIdAndUpdate({ _id: id, value});
+export const updateNewsById = (id: string, value: Partial<News>) => NewsModel.findByIdAndUpdate(id, value, { new: true });

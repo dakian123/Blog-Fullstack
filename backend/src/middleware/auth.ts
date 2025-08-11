@@ -3,15 +3,15 @@ import { UserModel, getUserByUsername, getUserBySessionToken } from '../models/u
 import { User } from '../types/type';
 
 // Generate secure random salt
-export const generateSalt = (): string => crypto.randomBytes(128).toString('base64');
+const generateSalt = (): string => crypto.randomBytes(128).toString('base64');
 
 // Hash password with salt using PBKDF2
-export const hashPassword = (password: string, salt: string): string => {
+const hashPassword = (password: string, salt: string): string => {
     return crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
 };
 
 // Hash password for comparison (utility function)
-export const comparePasswords = (inputPassword: string, salt: string, storedHash: string): boolean => {
+const comparePasswords = (inputPassword: string, salt: string, storedHash: string): boolean => {
     const inputHash = hashPassword(inputPassword, salt);
     return inputHash === storedHash;
 };
@@ -29,15 +29,6 @@ export const updateSessionToken = async (userId: string, sessionToken: string): 
         return true;
     }
     return false;
-};
-
-// Extract session token from Authorization header
-export const extractSessionToken = (authHeader: string | undefined): string | null => {
-    if (!authHeader) {
-        return null;
-    }
-
-    return authHeader;
 };
 
 // Clear session token (logout)
@@ -70,8 +61,8 @@ export const createUser = async (values: {
     
     // Create user with authentication data
     const user = new UserModel({
-        username,
-        role,
+        username: username,
+        role: role,
         authentication: {
             password: hashedPassword,
             salt: salt,
